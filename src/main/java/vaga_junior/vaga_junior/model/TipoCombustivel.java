@@ -1,13 +1,23 @@
 package vaga_junior.vaga_junior.model;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tipos_combustivel")
 public class TipoCombustivel implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "preco_litro")
     private BigDecimal PrecoLitro;
 
     public TipoCombustivel() {

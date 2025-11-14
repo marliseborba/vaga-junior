@@ -1,17 +1,33 @@
 package vaga_junior.vaga_junior.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "abastecimentos")
 public class Abastecimento implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "data")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate data;
+
+    @Column(name = "litros")
     private BigDecimal litros;
+
+    @Column(name = "valor")
     private BigDecimal valor;
+
+    @OneToOne
+    @JoinColumn(name = "bomba_combustivel_id")
     private BombaCombustivel bomba;
 
     public Long getId() {

@@ -1,12 +1,23 @@
 package vaga_junior.vaga_junior.model;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "bombas_combustivel")
 public class BombaCombustivel implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "nome")
     private String nome;
+
+    @OneToOne
+    @JoinColumn(name = "tipo_combustivel_id")
     private TipoCombustivel combustivel;
 
     public BombaCombustivel() {
