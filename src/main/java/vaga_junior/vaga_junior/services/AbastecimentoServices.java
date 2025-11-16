@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import vaga_junior.vaga_junior.repository.BombaCombustivelRepository;
 import vaga_junior.vaga_junior.repository.TipoCombustivelRepository;
 
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ public class AbastecimentoServices {
         TipoCombustivel combustivel = tipoCombustivelRepository.findById(bomba.getCombustivel().getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
         bomba.setCombustivel(combustivel);
         abastecimentoDTO.setBomba(parseObject(bomba, BombaCombustivelDTO.class));
-        entity.setValor(abastecimentoDTO.getLitros().multiply(combustivel.getPrecoLitro()));
+        entity.setValor(abastecimentoDTO.getLitros().multiply(combustivel.getPrecoLitro()).setScale(2, RoundingMode.HALF_UP));
         repository.save(entity);
         abastecimentoDTO = parseObject(entity, AbastecimentoDTO.class);
         abastecimentoDTO.setBomba(parseObject(bomba, BombaCombustivelDTO.class));

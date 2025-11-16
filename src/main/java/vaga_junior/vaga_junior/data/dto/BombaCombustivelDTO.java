@@ -1,7 +1,6 @@
 package vaga_junior.vaga_junior.data.dto;
 
 import jakarta.persistence.*;
-import vaga_junior.vaga_junior.model.TipoCombustivel;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -10,7 +9,7 @@ public class BombaCombustivelDTO implements Serializable {
 
     private Long id;
     private String nome;
-    private TipoCombustivelDTO combustivel;
+    private TipoCombustivelDTO combustivelDTO;
 
     public BombaCombustivelDTO() {
     }
@@ -32,11 +31,11 @@ public class BombaCombustivelDTO implements Serializable {
     }
 
     public TipoCombustivelDTO getCombustivel() {
-        return combustivel;
+        return combustivelDTO;
     }
 
-    public void setCombustivel(TipoCombustivelDTO combustivel) {
-        this.combustivel = combustivel;
+    public void setCombustivel(TipoCombustivelDTO combustivelDTO) {
+        this.combustivelDTO = combustivelDTO;
     }
 
     @Override

@@ -11,7 +11,6 @@ public class TipoCombustivelDTO implements Serializable {
 
     private Long id;
     private String nome;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BigDecimal PrecoLitro;
 
     public TipoCombustivelDTO() {
