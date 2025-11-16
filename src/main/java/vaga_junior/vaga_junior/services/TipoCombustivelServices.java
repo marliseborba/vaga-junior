@@ -1,10 +1,16 @@
 package vaga_junior.vaga_junior.services;
 
+import vaga_junior.vaga_junior.data.dto.TipoCombustivelDTO;
+import vaga_junior.vaga_junior.exception.ResourceNotFoundException;
 import vaga_junior.vaga_junior.model.TipoCombustivel;
 import vaga_junior.vaga_junior.repository.TipoCombustivelRepository;
+import static vaga_junior.vaga_junior.mapper.ObjectMapper.parseListObjects;
+import static vaga_junior.vaga_junior.mapper.ObjectMapper.parseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,25 +20,24 @@ public class TipoCombustivelServices {
     @Autowired
     TipoCombustivelRepository repository;
 
-    public List<TipoCombustivel> findAll() {
-        return repository.findAll();
+    public List<TipoCombustivelDTO> findAll() {
+        return parseListObjects(repository.findAll(), TipoCombustivelDTO.class);
     }
 
-    public Optional<TipoCombustivel> findById(Long id) {
-        return repository.findById(id);
+    public TipoCombustivelDTO findById(Long id) {
+        return parseObject(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!")), TipoCombustivelDTO.class);
     }
 
-    public TipoCombustivel create(TipoCombustivel tipoCombustivel) {
-        return repository.save(tipoCombustivel);
+    public TipoCombustivelDTO create(TipoCombustivelDTO tipoCombustivelDTO) {
+        return parseObject(repository.save(parseObject(tipoCombustivelDTO, TipoCombustivel.class)), TipoCombustivelDTO.class);
     }
 
-    public TipoCombustivel update(TipoCombustivel tipoCombustivel) {
-        Optional<TipoCombustivel> entity = repository.findById(tipoCombustivel.getId());
+    public TipoCombustivelDTO update(TipoCombustivelDTO tipoCombustivelDTO) {
+        TipoCombustivel entity = repository.findById(tipoCombustivelDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
-        entity.get().setNome(tipoCombustivel.getNome());
-        entity.get().setPrecoLitro(tipoCombustivel.getPrecoLitro());
-
-        return repository.save(entity.get());
+        entity.setNome(tipoCombustivelDTO.getNome());
+        entity.setPrecoLitro(tipoCombustivelDTO.getPrecoLitro());
+        return parseObject(repository.save(entity), TipoCombustivelDTO.class);
     }
 
     public void delete(Long id) {

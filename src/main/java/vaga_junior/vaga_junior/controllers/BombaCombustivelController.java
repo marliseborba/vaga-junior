@@ -1,5 +1,6 @@
 package vaga_junior.vaga_junior.controllers;
 
+import vaga_junior.vaga_junior.data.dto.BombaCombustivelDTO;
 import vaga_junior.vaga_junior.model.BombaCombustivel;
 import vaga_junior.vaga_junior.services.BombaCombustivelServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,14 @@ public class BombaCombustivelController {
 
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<BombaCombustivel> findAll() {
+    public List<BombaCombustivelDTO> findAll() {
         return service.findAll();
     }
 
     @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Optional<BombaCombustivel> findById(@PathVariable("id") Long id) {
+    public BombaCombustivelDTO findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
@@ -35,16 +36,16 @@ public class BombaCombustivelController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public BombaCombustivel create(@RequestBody BombaCombustivel bombaCombustivel) {
-        return service.create(bombaCombustivel);
+    public BombaCombustivelDTO create(@RequestBody BombaCombustivelDTO bombaCombustivelDTO) {
+        return service.create(bombaCombustivelDTO);
     }
 
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public BombaCombustivel update(@RequestBody BombaCombustivel bombaCombustivel) {
-        return service.update(bombaCombustivel);
+    public BombaCombustivelDTO update(@RequestBody BombaCombustivelDTO bombaCombustivelDTO) {
+        return service.update(bombaCombustivelDTO);
     }
 
     @DeleteMapping(value = "/{id}")

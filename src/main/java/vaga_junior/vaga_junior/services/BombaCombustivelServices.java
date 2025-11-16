@@ -1,9 +1,16 @@
 package vaga_junior.vaga_junior.services;
 
+import vaga_junior.vaga_junior.data.dto.BombaCombustivelDTO;
+import vaga_junior.vaga_junior.data.dto.TipoCombustivelDTO;
+import vaga_junior.vaga_junior.exception.ResourceNotFoundException;
 import vaga_junior.vaga_junior.model.BombaCombustivel;
+import vaga_junior.vaga_junior.model.TipoCombustivel;
 import vaga_junior.vaga_junior.repository.BombaCombustivelRepository;
+import static vaga_junior.vaga_junior.mapper.ObjectMapper.parseListObjects;
+import static vaga_junior.vaga_junior.mapper.ObjectMapper.parseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vaga_junior.vaga_junior.repository.TipoCombustivelRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,26 +20,35 @@ public class BombaCombustivelServices {
 
     @Autowired
     BombaCombustivelRepository repository;
+    @Autowired
+    TipoCombustivelRepository tipoCombustivelRepository;
 
-    public List<BombaCombustivel> findAll() {
-        return repository.findAll();
+    public List<BombaCombustivelDTO> findAll() {
+        return parseListObjects(repository.findAll(), BombaCombustivelDTO.class);
     }
 
-    public Optional<BombaCombustivel> findById(Long id) {
-        return repository.findById(id);
+    public BombaCombustivelDTO findById(Long id) {
+        return parseObject(parseObject(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!")), BombaCombustivel.class), BombaCombustivelDTO.class);
     }
 
-    public BombaCombustivel create(BombaCombustivel bombaCombustivel) {
-        return repository.save(bombaCombustivel);
+    public BombaCombustivelDTO create(BombaCombustivelDTO bombaCombustivelDTO) {
+        BombaCombustivel entity = repository.save(parseObject(bombaCombustivelDTO, BombaCombustivel.class));
+        repository.save(entity);
+        bombaCombustivelDTO = parseObject(entity, BombaCombustivelDTO.class);
+        TipoCombustivel combustivel = tipoCombustivelRepository.findById(bombaCombustivelDTO.getCombustivel().getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        bombaCombustivelDTO.setCombustivel(parseObject(combustivel, TipoCombustivelDTO.class));
+        return bombaCombustivelDTO;
     }
 
-    public BombaCombustivel update(BombaCombustivel bombaCombustivel) {
-        Optional<BombaCombustivel> entity = repository.findById(bombaCombustivel.getId());
-
-        entity.get().setNome(bombaCombustivel.getNome());
-        entity.get().setCombustivel(bombaCombustivel.getCombustivel());
-
-        return repository.save(entity.get());
+    public BombaCombustivelDTO update(BombaCombustivelDTO bombaCombustivelDTO) {
+        BombaCombustivel entity = repository.findById(bombaCombustivelDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        entity.setNome(bombaCombustivelDTO.getNome());
+        entity.setCombustivel(parseObject(bombaCombustivelDTO.getCombustivel(), TipoCombustivel.class));
+        repository.save(entity);
+        bombaCombustivelDTO = parseObject(entity, BombaCombustivelDTO.class);
+        TipoCombustivel combustivel = tipoCombustivelRepository.findById(bombaCombustivelDTO.getCombustivel().getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        bombaCombustivelDTO.setCombustivel(parseObject(combustivel, TipoCombustivelDTO.class));
+        return bombaCombustivelDTO;
     }
 
     public void delete(Long id) {
