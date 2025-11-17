@@ -9,10 +9,12 @@ import java.util.List;
 public class ObjectMapper {
     private static Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 
+    // Mapeia um objeto Entity para um objeto DTO ou vice-versa
     public static <O, D> D parseObject(O origin, Class<D> destination) {
         return mapper.map(origin, destination);
     }
 
+    // Mapeia uma lista de objetos Entity para uma lista de objetos DTO ou vice-versa
     public static <O, D> List<D> parseListObjects(List<O> origin, Class<D> destination) {
 
         List<D> destinationObjects = new ArrayList<D>();

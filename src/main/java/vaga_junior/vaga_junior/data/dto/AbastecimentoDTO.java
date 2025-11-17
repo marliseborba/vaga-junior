@@ -13,9 +13,14 @@ import java.util.Objects;
 public class AbastecimentoDTO implements Serializable {
 
     private Long id;
+
+    // Formata o campo de Data
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate data;
     private BigDecimal litros;
+
+    // Define o campo valor para somente leitura, pois o valor será calculado automaticamente
+    // no AbastecimentoService
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String valor;
     private BombaCombustivelDTO bomba;

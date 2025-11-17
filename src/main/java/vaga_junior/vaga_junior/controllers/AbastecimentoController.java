@@ -16,12 +16,14 @@ public class AbastecimentoController {
     @Autowired
     private AbastecimentoServices service;
 
+    // Acessa o método findAll() do AbastecimentoService
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AbastecimentoDTO> findAll() {
         return service.findAll();
     }
 
+    // Acessa o método findById() do AbastecimentoService
     @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -29,6 +31,7 @@ public class AbastecimentoController {
         return service.findById(id);
     }
 
+    // Acessa o método create() do AbastecimentoService
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -37,6 +40,7 @@ public class AbastecimentoController {
         return service.create(abastecimentoDTO);
     }
 
+    // Acessa o método update() do AbastecimentoService
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -45,6 +49,7 @@ public class AbastecimentoController {
         return service.update(abastecimentoDTO);
     }
 
+    // Acessa o método delete() do AbastecimentoService
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         service.delete(id);

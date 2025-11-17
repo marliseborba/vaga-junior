@@ -20,26 +20,31 @@ public class TipoCombustivelServices {
     @Autowired
     TipoCombustivelRepository repository;
 
+    // Retorna todos os registros da tabela tipos_combustivel
     public List<TipoCombustivelDTO> findAll() {
         return parseListObjects(repository.findAll(), TipoCombustivelDTO.class);
     }
 
+    // Retorna um registro da tabela tipos_combustivel pelo ID
     public TipoCombustivelDTO findById(Long id) {
-        return parseObject(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!")), TipoCombustivelDTO.class);
+        return parseObject(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado para este ID!")), TipoCombustivelDTO.class);
     }
 
+    // Cria um registro na tabela tipos_combustivel
     public TipoCombustivelDTO create(TipoCombustivelDTO tipoCombustivelDTO) {
         return parseObject(repository.save(parseObject(tipoCombustivelDTO, TipoCombustivel.class)), TipoCombustivelDTO.class);
     }
 
+    // Altera um registro na tabela tipos_combustivel pelo ID
     public TipoCombustivelDTO update(TipoCombustivelDTO tipoCombustivelDTO) {
-        TipoCombustivel entity = repository.findById(tipoCombustivelDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        TipoCombustivel entity = repository.findById(tipoCombustivelDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado para este ID!"));
 
         entity.setNome(tipoCombustivelDTO.getNome());
         entity.setPrecoLitro(tipoCombustivelDTO.getPrecoLitro());
         return parseObject(repository.save(entity), TipoCombustivelDTO.class);
     }
 
+    // Deleta um registro da tabela tipos_combustivel pelo ID
     public void delete(Long id) {
         Optional<TipoCombustivel> entity = repository.findById(id);
 

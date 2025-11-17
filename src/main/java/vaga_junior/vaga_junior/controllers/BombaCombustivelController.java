@@ -19,12 +19,14 @@ public class BombaCombustivelController {
     @Autowired
     private BombaCombustivelServices service;
 
+    // Acessa o método findAll() do BombaCombustivelService
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BombaCombustivelDTO> findAll() {
         return service.findAll();
     }
 
+    // Acessa o método findById() do BombaCombustivelService
     @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -32,6 +34,7 @@ public class BombaCombustivelController {
         return service.findById(id);
     }
 
+    // Acessa o método create() do BombaCombustivelService
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -40,6 +43,7 @@ public class BombaCombustivelController {
         return service.create(bombaCombustivelDTO);
     }
 
+    // Acessa o método update() do BombaCombustivelService
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -48,6 +52,7 @@ public class BombaCombustivelController {
         return service.update(bombaCombustivelDTO);
     }
 
+    // Acessa o método delete() do BombaCombustivelService
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         service.delete(id);

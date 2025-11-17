@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
+    // Define informações sobre a API para o Swagger
     @Bean
     OpenAPI customOpenAPI() {
         return new OpenAPI()
             .info(new Info()
                     .title("Api REST Java")
-                    .version("v1")
                     .description("Projeto API REST em Java para Vaga de Programador")
             );
     }
