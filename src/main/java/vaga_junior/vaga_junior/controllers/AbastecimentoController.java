@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/abastecimentos")
-public class AbastecimentoController {
+public class AbastecimentoController implements vaga_junior.vaga_junior.controllers.docs.AbastecimentoControllerDocs {
 
     @Autowired
     private AbastecimentoServices service;

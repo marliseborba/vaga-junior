@@ -14,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/bombascombustivel")
 
-public class BombaCombustivelController {
+public class BombaCombustivelController implements vaga_junior.vaga_junior.controllers.docs.BombaCombustivelControllerDocs {
 
     @Autowired
     private BombaCombustivelServices service;
@@ -22,6 +22,7 @@ public class BombaCombustivelController {
     // Acessa o método findAll() do BombaCombustivelService
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @Override
     public List<BombaCombustivelDTO> findAll() {
         return service.findAll();
     }
@@ -30,6 +31,7 @@ public class BombaCombustivelController {
     @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @Override
     public BombaCombustivelDTO findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
@@ -39,6 +41,7 @@ public class BombaCombustivelController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @Override
     public BombaCombustivelDTO create(@RequestBody BombaCombustivelDTO bombaCombustivelDTO) {
         return service.create(bombaCombustivelDTO);
     }
@@ -48,12 +51,14 @@ public class BombaCombustivelController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @Override
     public BombaCombustivelDTO update(@RequestBody BombaCombustivelDTO bombaCombustivelDTO) {
         return service.update(bombaCombustivelDTO);
     }
 
     // Acessa o método delete() do BombaCombustivelService
     @DeleteMapping(value = "/{id}")
+    @Override
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
